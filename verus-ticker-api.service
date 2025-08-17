@@ -1,0 +1,20 @@
+[Unit]
+Description=Verus Ticker API Service
+After=network.target
+
+[Service]
+Type=simple
+User=dev
+WorkingDirectory=/home/dev/Desktop/API/Audit_Rebuild
+Environment=PATH=/usr/bin:/usr/local/bin
+ExecStart=/usr/bin/python3 main.py
+Restart=always
+RestartSec=10
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=verus-ticker-api
+
+[Install]
+WantedBy=multi-user.target
