@@ -12,3 +12,21 @@ VERUS_RPC_PORT=27486
 VERUS_RPC_URL=http://127.0.0.1:27486/
 VERUS_RPC_USER=
 VERUS_RPC_PASSWORD=
+
+
+
+📡 API Endpoints
+🏥 Health & Status
+GET /health - Server status and RPC connection
+GET /cache_status - Cache information and block height
+GET /validate - Endpoint validation
+📊 Ticker Data
+GET /coingecko - CoinGecko format (array with pool_id)
+GET /coinmarketcap - CoinMarketCap format (object with composite keys)
+GET /coinpaprika - Coinpaprika format (VerusStatisticsAPI compatible)
+GET /coinmarketcap_iaddress - CMC I-Address format (testing with Verus native IDs)
+⚡ Cached Endpoints (60s TTL)
+GET /coingecko_cached - CoinGecko cached
+GET /coinmarketcap_cached - CoinMarketCap cached
+GET /coinpaprika_cached - Coinpaprika cached
+GET /coinmarketcap_iaddress_cached - CMC I-Address cached
