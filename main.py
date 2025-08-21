@@ -17,6 +17,10 @@ from typing import Dict, Any
 import subprocess
 import signal
 import time
+from dotenv import dotenv_values
+
+# Load dotenv for base_url for reference
+base_url = dotenv_values(".env")['BASE_URL']
 
 # Add current directory to path for imports
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
@@ -371,7 +375,7 @@ async def root():
         <div class="container">
             <h1>🔍 Verus Ticker API</h1>
             <div class="subtitle">
-                <strong>Version:</strong> 1.0.0 | <strong>Status:</strong> <span class="status">✅ Active</span> | <strong>Base URL:</strong> http://localhost:8765<br>
+                <strong>Version:</strong> 1.0.0 | <strong>Status:</strong> <span class="status">✅ Active</span> | <strong>Base URL:</strong> {base_url}<br>
                 <strong>Current Block:</strong> <span id="block-height">Loading...</span> | <strong>Cache:</strong> <span id="cache-refresh">Loading...</span>
             </div>
             
@@ -595,7 +599,7 @@ async def root():
                 <li><code>GET /coinmarketcap_iaddress_cached</code> - CMC I-Address cached</li>
             </ul>
                 <p><strong>Liquidity Calculation:</strong> Pool liquidity × currency weight (typically 25% for 4-currency pools)</p>
-                <div class="code">curl http://localhost:8765/coingecko_cached</div>
+                <div class="code">curl {base_url}/coingecko_cached</div>
             </div>
             
             <div class="tech-detail">
@@ -606,7 +610,7 @@ async def root():
                 <p><strong>Price Aggregation:</strong> Volume-weighted average pricing across all instances</p>
                 <p><strong>Symbol Source:</strong> Uses Ethereum-standardized symbols from <code>currency_contract_mapping.eth_symbol</code></p>
                 <p><strong>Contract Integration:</strong> Uses ERC20 contract addresses for base_id/quote_id fields</p>
-                <div class="code">curl http://localhost:8765/coinmarketcap_cached</div>
+                <div class="code">curl {base_url}/coinmarketcap_cached</div>
             </div>
             
             <div class="tech-detail">
@@ -617,7 +621,7 @@ async def root():
                 <p><strong>Data Structure:</strong> Array of ticker objects with symbol, volume, last, high, low, open fields</p>
                 <p><strong>Exclusion Logic:</strong> Filters converter currencies and excluded chains</p>
                 <p><strong>Price Fallback:</strong> When <code>last_price = 0</code>, uses <code>(high + low) / 2</code> calculation</p>
-                <div class="code">curl http://localhost:8765/coinpaprika_cached</div>
+                <div class="code">curl {base_url}/coinpaprika_cached</div>
             </div>
             
             <div class="tech-detail">
@@ -629,7 +633,7 @@ async def root():
                 <p><strong>Symbol Source:</strong> Uses Verus native currency names from <code>currency_contract_mapping.vrsc_symbol</code></p>
                 <p><strong>Format Structure:</strong> CoinMarketCap DEX API compatible with sequential keys ("0", "1", "2", etc.)</p>
                 <p><strong>Use Case:</strong> Testing and validation of Verus native identifier integrations</p>
-                <div class="code">curl http://localhost:8765/coinmarketcap_iaddress_cached</div>
+                <div class="code">curl {base_url}/coinmarketcap_iaddress_cached</div>
             </div>
             
 
@@ -799,8 +803,8 @@ async def root():
                 </table>
                 
                 <p><strong>Usage:</strong></p>
-                <div class="code">curl http://localhost:8765/coinmarketcap_cached  # ERC20 contract addresses</div>
-                <div class="code">curl http://localhost:8765/coinmarketcap_iaddress_cached  # Verus i-addresses</div>
+                <div class="code">curl {base_url}/coinmarketcap_cached  # ERC20 contract addresses</div>
+                <div class="code">curl {base_url}/coinmarketcap_iaddress_cached  # Verus i-addresses</div>
             </div>
             
             <h3>📊 Aggregation Logic and Methodologies</h3>
@@ -877,6 +881,7 @@ async def root():
     </body>
     </html>
     """
+    html_content = html_content.replace("{base_url}", base_url)
     return HTMLResponse(content=html_content)
 
 # API v1 router placeholder (unused endpoint removed)
